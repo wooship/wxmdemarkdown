@@ -1,4 +1,4 @@
-# WxM DeMarkdown
+# wxmdemarkdown
 
 A modern, fast, and cross-platform Markdown editor built with **Wails** and **React**.
 
@@ -33,7 +33,7 @@ A modern, fast, and cross-platform Markdown editor built with **Wails** and **Re
 
 1.  Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/wxmdemarkdown.git
+    git clone https://github.com/wooship/wxmdemarkdown.git
     cd wxmdemarkdown
     ```
 
