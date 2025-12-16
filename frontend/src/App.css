@@ -1,0 +1,300 @@
+#App {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    background-color: #f2f2f7; /* Light gray for Apple-like background */
+}
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: #ffffff; /* White background for toolbar */
+    color: #3c3c43; /* Darker text color */
+    border-bottom: 1px solid #e0e0e0; /* Lighter border */
+    gap: 10px;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+    min-height: 44px; /* Minimum height for buttons */
+}
+
+.toolbar button {
+    background-color: #007aff; /* Apple blue */
+    color: #ffffff;
+    border: none;
+    padding: 7px 14px; /* Slightly adjusted padding */
+    border-radius: 5px; /* More rounded corners */
+    cursor: pointer;
+    transition: background-color 0.2s, opacity 0.2s;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.toolbar button:hover {
+    background-color: #0060e6; /* Darker blue on hover */
+    opacity: 0.9; /* Subtle opacity change */
+}
+
+
+
+.main-content {
+    flex: 1;
+    display: flex;
+    gap: 10px; /* Add gap between panes */
+    height: calc(100vh - 44px); /* Adjust height for toolbar */
+    overflow: hidden;
+    background-color: #f2f2f7;
+    padding: 10px; /* Add padding to main content area */
+}
+
+.editor-pane {
+    box-sizing: border-box;
+    height: 100%;
+    padding: 10px;
+    position: relative;
+    width: 50%; /* Set explicit width to 50% */
+    background-color: #1c1c1e; /* Dark background color */
+    border-right: none;
+    border-radius: 8px;
+    margin: 0; /* Remove horizontal margin */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+}
+
+.markdown-input {
+    flex: 1;
+    width: 100%;
+    border: none;
+    resize: none;
+    padding: 1rem;
+    font-family: 'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 14px;
+    background-color: #1c1c1e; /* Dark background color */
+    color: #f2f2f7; /* Light text color */
+    outline: none;
+    box-sizing: border-box;
+    line-height: 1.6;
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.markdown-input::-webkit-scrollbar {
+    width: 8px;
+}
+
+.markdown-input::-webkit-scrollbar-track {
+    background: #2c2c2e; /* Darker track */
+    border-radius: 10px;
+}
+
+.markdown-input::-webkit-scrollbar-thumb {
+    background: #505052; /* Slightly lighter thumb */
+    border-radius: 10px;
+}
+
+.markdown-input::-webkit-scrollbar-thumb:hover {
+    background: #6a6a6e; /* Lighter thumb on hover */
+}
+
+
+.preview-pane {
+    box-sizing: border-box;
+    height: 100%;
+    padding: 10px;
+    position: relative;
+    width: 50%; /* Set explicit width to 50% */
+    overflow-y: auto;
+    background-color: #ffffff;
+    color: #3c3c43;
+    border-radius: 8px;
+    margin: 0; /* Remove horizontal margin */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+
+
+.pane-header {
+    padding: 8px 15px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #3c3c43;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 1rem;
+    background-color: #f9f9fb;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Markdown Styles */
+.preview-pane h1, .preview-pane h2, .preview-pane h3, .preview-pane h4, .preview-pane h5, .preview-pane h6 {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: #3c3c43;
+}
+
+.preview-pane h1 { font-size: 2em; border-bottom: 1px solid #e0e0e0; padding-bottom: .3em; }
+.preview-pane h2 { font-size: 1.5em; border-bottom: 1px solid #e0e0e0; padding-bottom: .3em; }
+
+.preview-pane p {
+    margin-top: 0;
+    margin-bottom: 16px;
+    line-height: 1.6;
+}
+
+.preview-pane code {
+    padding: .2em .4em;
+    margin: 0;
+    font-size: 85%;
+    background-color: rgba(60, 60, 67, 0.08);
+    border-radius: 3px;
+    font-family: 'SF Mono', SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+    color: #3c3c43;
+}
+
+.preview-pane pre {
+    padding: 1rem;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f0f0f5; /* Lighter background for code blocks */
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    border: 1px solid #e0e0e0;
+}
+
+.preview-pane pre code {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    line-height: inherit;
+    word-wrap: normal;
+    background-color: transparent;
+    border: 0;
+}
+
+.preview-pane blockquote {
+    padding: 0 1em;
+    color: #6a6a6a;
+    border-left: 0.25em solid #d0d0d5;
+    margin: 0 0 16px 0;
+}
+
+.preview-pane table {
+    display: block;
+    width: 100%;
+    overflow: auto;
+    margin-bottom: 16px;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.preview-pane table tr {
+    background-color: #fff;
+    border-top: 1px solid #e0e0e0;
+}
+
+.preview-pane table tr:nth-child(2n) {
+    background-color: #f8f8fa;
+}
+
+.preview-pane table th, .preview-pane table td {
+    padding: 6px 13px;
+    border: 1px solid #e0e0e0;
+}
+
+.preview-pane table th {
+    font-weight: 600;
+    color: #3c3c43;
+}
+
+.preview-pane img {
+    max-width: 100%;
+    box-sizing: content-box;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Mermaid Diagram Container */
+.mermaid {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+    overflow-x: auto;
+}
+
+/* Custom Code Block Styles (for React component) */
+.code-block-wrapper {
+    margin-bottom: 1rem;
+    color: #3c3c43;
+    font-size: 0.875rem;
+}
+
+.code-block-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: #e8e8ed; /* Slightly darker header */
+    color: #8e8e93;
+    border-bottom: 1px solid #e0e0e0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    font-size: 0.75rem;
+    user-select: none;
+}
+
+.code-lang {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.copy-button {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: none;
+    border: none;
+    color: #8e8e93;
+    cursor: pointer;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.copy-button:hover {
+    background-color: #dcdce2;
+    color: #3c3c43;
+}
+
+/* Adjust pre to fit inside wrapper */
+.preview-pane .code-block-wrapper pre {
+    margin: 0;
+    padding: 1rem;
+    background-color: transparent !important;
+    border-radius: 0;
+    overflow-x: auto;
+    border: none;
+}
+
+/* Ensure code inside wrapper has correct color if needed, though highlight.js handles most */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
