@@ -9,5 +9,15 @@
   "author": {
     "name": "wooship",
     "email": "wooship@163.com"
+  },
+  "info": {
+    "fileAssociations": [
+      {
+        "ext": "md",
+        "name": "Markdown",
+        "role": "Editor",
+        "iconName": "appicon"
+      }
+    ]
   }
 }

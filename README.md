@@ -13,6 +13,16 @@ A modern, fast, and cross-platform Markdown editor built with **Wails** and **Re
   - **Diagrams**: Integrated Mermaid.js support for flowcharts, sequence diagrams, and more.
   - **Code Highlighting**: Syntax highlighting for code blocks.
 - **Dark Mode Editor**: A comfortable dark-themed editor pane for focused writing.
+- **Auto-Save**: Automatically saves your last edited content and restores it on next launch.
+- **Cross-Platform**: Runs natively on macOS, Windows, and Linux.
+
+- **Real-time Preview**: See your changes instantly as you type.
+- **Rich Markdown Support**:
+  - **GFM**: GitHub Flavored Markdown support.
+  - **Math**: Mathematical equations rendering using KaTeX ($E=mc^2$).
+  - **Diagrams**: Integrated Mermaid.js support for flowcharts, sequence diagrams, and more.
+  - **Code Highlighting**: Syntax highlighting for code blocks.
+- **Dark Mode Editor**: A comfortable dark-themed editor pane for focused writing.
 - **Cross-Platform**: Runs natively on macOS, Windows, and Linux.
 
 ## Tech Stack
@@ -62,6 +72,12 @@ wails build
 The compiled binary will be located in the `build/bin` directory.
 
 ## Usage
+
+1.  **Open**: Click the "Open" button to load an existing Markdown file.
+2.  **Edit**: Write your Markdown in the left dark pane.
+3.  **Preview**: View the rendered result in the right light pane.
+4.  **Save**: Click "Save" to save your changes to a file.
+5.  **Auto-Save**: Your content is automatically saved when you close the app and restored on next launch.
 
 1.  **Open**: Click the "Open" button to load an existing Markdown file.
 2.  **Edit**: Write your Markdown in the left dark pane.

@@ -1,0 +1,39 @@
+# Build output
+build/
+frontend/dist/
+
+# Dependencies
+frontend/node_modules/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# App user data (contains last edited content)
+.wxmdemarkdown/
+
+# Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go workspace
+go.work
+
+# Environment
+.env
+.env.local
+
+# Temporary files
+*.tmp
+*.temp

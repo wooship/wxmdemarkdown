@@ -5,7 +5,8 @@ import remarkMath from 'remark-math';
 import RehypeKatex from 'rehype-katex';
 import RehypeHighlight from 'rehype-highlight';
 import mermaid from 'mermaid';
-import {OpenFile, SaveFile} from "../wailsjs/go/main/App";
+import {OpenFile, SaveFile, CheckForFile, SaveLastContent, LoadLastContent, SetCurrentContent} from "../wailsjs/go/main/App";
+import {EventsOn} from "../wailsjs/runtime/runtime";
 import 'katex/dist/katex.min.css';
 import 'highlight.js/styles/atom-one-dark.css';
 import './App.css';
@@ -22,6 +23,56 @@ mermaid.initialize({
 function App() {
     const [markdown, setMarkdown] = useState(initialMarkdown);
 
+    // Load last saved content on startup
+    useEffect(() => {
+        // First check if a file was opened on startup
+        CheckForFile().then((content) => {
+            if (content) {
+                setMarkdown(content);
+                return;
+            }
+            // If no file opened, try to load last saved content
+            LoadLastContent().then((lastContent) => {
+                if (lastContent) {
+                    setMarkdown(lastContent);
+                }
+                // If no last content, keep using initialMarkdown (default)
+            }).catch((err) => {
+                console.error("Failed to load last content:", err);
+            });
+        });
+
+        // Listen for file-opened events
+        const unsubscribe = EventsOn("file-opened", (content: string) => {
+             if (content) {
+                setMarkdown(content);
+            }
+        });
+        
+        return () => {
+            if (unsubscribe) unsubscribe();
+        };
+    }, []);
+
+    // Sync content with Go backend for auto-save on close
+    useEffect(() => {
+        SetCurrentContent(markdown).catch((err) => {
+            console.error("Failed to sync content:", err);
+        });
+    }, [markdown]);
+    useEffect(() => {
+        const handleBeforeUnload = () => {
+            SaveLastContent(markdown).catch((err) => {
+                console.error("Failed to save last content:", err);
+            });
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [markdown]);
 
     useEffect(() => {
         // 确保 DOM 更新后再运行 mermaid
@@ -129,10 +180,6 @@ function App() {
             // 可以在这里显示一个错误提示给用户
         });
     };
-
-
-
-
 
     return (
         <div id="App">
