@@ -21,24 +21,31 @@ mermaid.initialize({
 });
 
 function App() {
-    const [markdown, setMarkdown] = useState(initialMarkdown);
+    const [markdown, setMarkdown] = useState('');
+    const [isLoaded, setIsLoaded] = useState(false);
 
-    // Load last saved content on startup
+    // Load content on startup
     useEffect(() => {
         // First check if a file was opened on startup
         CheckForFile().then((content) => {
             if (content) {
                 setMarkdown(content);
+                setIsLoaded(true);
                 return;
             }
             // If no file opened, try to load last saved content
             LoadLastContent().then((lastContent) => {
                 if (lastContent) {
                     setMarkdown(lastContent);
+                } else {
+                    // If no last content, use default
+                    setMarkdown(initialMarkdown);
                 }
-                // If no last content, keep using initialMarkdown (default)
+                setIsLoaded(true);
             }).catch((err) => {
                 console.error("Failed to load last content:", err);
+                setMarkdown(initialMarkdown);
+                setIsLoaded(true);
             });
         });
 
@@ -56,23 +63,12 @@ function App() {
 
     // Sync content with Go backend for auto-save on close
     useEffect(() => {
-        SetCurrentContent(markdown).catch((err) => {
-            console.error("Failed to sync content:", err);
-        });
-    }, [markdown]);
-    useEffect(() => {
-        const handleBeforeUnload = () => {
-            SaveLastContent(markdown).catch((err) => {
-                console.error("Failed to save last content:", err);
+        if (isLoaded) {
+            SetCurrentContent(markdown).catch((err) => {
+                console.error("Failed to sync content:", err);
             });
-        };
-
-        window.addEventListener('beforeunload', handleBeforeUnload);
-        
-        return () => {
-            window.removeEventListener('beforeunload', handleBeforeUnload);
-        };
-    }, [markdown]);
+        }
+    }, [markdown, isLoaded]);
 
     useEffect(() => {
         // 确保 DOM 更新后再运行 mermaid
@@ -85,7 +81,7 @@ function App() {
             }
         }, 200); // 增加延迟到200ms，确保DOM渲染完成，特别是首次加载
         return () => clearTimeout(timer);
-    }, [markdown]);
+    }, [markdown, isLoaded]);
 
     const CodeBlock = ({ language, children }: any) => {
         const [copied, setCopied] = useState(false);
@@ -166,7 +162,6 @@ function App() {
             }
         }).catch((err) => {
             console.error("Failed to open file:", err);
-            // 可以在这里显示一个错误提示给用户
         });
     };
 
@@ -177,9 +172,12 @@ function App() {
             }
         }).catch((err) => {
             console.error("Failed to save file:", err);
-            // 可以在这里显示一个错误提示给用户
         });
     };
+
+    if (!isLoaded) {
+        return <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>Loading...</div>;
+    }
 
     return (
         <div id="App">
